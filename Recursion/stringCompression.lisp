@@ -1,0 +1,17 @@
+(defun group (bla)
+  (defun update (groups elem)
+    (cond ((null groups) (list (list elem)))
+	  ((eql (first (first groups)) elem) (cons (cons elem (first groups)) (rest groups)))
+	  (t (cons (list elem) groups))))
+  (reverse (reduce #'update bla :initial-value nil)))
+
+(defun compress-string (string)
+  (defun compress-subsequence (subseq)
+    (let ((element (elt subseq 0))
+	  (count (length subseq)))
+      (if (= 1 count)
+	  (format nil "~a" element)
+	  (format nil "~a~a" element count))))
+  (apply #'concatenate 'string (mapcar #'compress-subsequence (group string))))
+
+(format t "~a~%" (compress-string (read-line)))

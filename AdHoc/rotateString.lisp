@@ -1,0 +1,10 @@
+(defun rotate (s)
+  (dotimes (i (length s))
+    (let ((first (subseq s 0 1))
+          (rest (subseq s 1)))
+      (setq s (concatenate 'string rest first))
+      (format t "~a " s)))
+  (format t "~%"))
+
+(dotimes (i (read))
+    (rotate (read-line)))
