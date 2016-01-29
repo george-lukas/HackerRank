@@ -1,0 +1,37 @@
+(defvar N)
+(defvar Q)
+(defvar ch (make-array '(1111 2)))
+(defvar K)
+
+(defun rec (at depth)
+  (when (> at 0)
+    (when (zerop (rem depth K))
+      (let ((temp (aref ch at 0)))
+	(setf (aref ch at 0) (aref ch at 1))
+	(setf (aref ch at 1) temp)))
+    (rec (aref ch at 0) (+ depth 1))
+    (rec (aref ch at 1) (+ depth 1))))
+
+(defun in_order (at)
+  (when (> at 0)
+    (in_order (aref ch at 0))
+    (format t "~A " at)
+    (in_order (aref ch at 1))))
+
+(setf N (read))
+(let ((i 1))
+  (loop
+     (when (> i N) (return))
+     (setf (aref ch i 0) (read))
+     (setf (aref ch i 1) (read))
+     (incf i)))
+
+(setf Q (read))
+(let ((qq 0))
+  (loop
+     (when (= qq Q) (return))
+     (setf K (read))
+     (rec 1 1)
+     (in_order 1)
+     (format t "~%")
+     (incf qq)))
